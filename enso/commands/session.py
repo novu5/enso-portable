@@ -20,42 +20,54 @@ def perform_exit(ensoapi, action):
     finally:
         adjust_privilege(win32con.SE_SHUTDOWN_NAME, 0)
 
-def cmd_shutdown(ensoapi):
+def cmd_shutdown(ensoapi, query = None):
     """Shut down the PC
     The <b>shutdown</b> power management command shuts down the computer."""
     try:
-        perform_exit(ensoapi, win32con.EWX_SHUTDOWN)
+		if query=="y":
+			ensoapi.display_message('Shuting down')
+			perform_exit(ensoapi, win32con.EWX_SHUTDOWN)
+		else:
+			ensoapi.display_message('Enter command again with query = y to execute')
     except:
         ensoapi.display_message('Error shutting down')
- 
-def cmd_reboot(ensoapi):
+
+def cmd_reboot(ensoapi, query = None):
     """Reboot the PC
     The <b>reboot</b> power management command reboots the computer."""
     try:
-        perform_exit(ensoapi, win32con.EWX_REBOOT)
+		if query=="y":
+			ensoapi.display_message('Rebooting')
+			perform_exit(ensoapi, win32con.EWX_REBOOT)	
+		else:
+			ensoapi.display_message('Enter command again with query = y to execute')
     except:
         ensoapi.display_message('Error rebooting')
- 
-def cmd_logoff(ensoapi):
+	
+def cmd_logoff(ensoapi, query = None):
     """Log off the PC
     The <b>logoff</b> power management command logs of the computer."""
     try:
-        perform_exit(ensoapi, win32con.EWX_LOGOFF)
+		if query=="y":
+			ensoapi.display_message('Logging off')
+			perform_exit(ensoapi, win32con.EWX_LOGOFF)
+		else:
+			ensoapi.display_message('Enter command again with query = y to execute') 
     except:
         ensoapi.display_message('Error logging off')
 
-def cmd_suspend(ensoapi):
-    """Suspend the PC
-    The <b>suspend</b> power management command suspends the computer."""
-    try:
-        windll.powrprof.SetSuspendState(c_int(0), c_int(1), c_int(1))
-    except:
-        ensoapi.display_message('Error suspending')
+#def cmd_suspend(ensoapi):
+#    """Suspend the PC
+#    The <b>suspend</b> power management command suspends the computer."""
+#    try:
+#        windll.powrprof.SetSuspendState(c_int(0), c_int(1), c_int(1))
+#    except:
+#        ensoapi.display_message('Error suspending')
  
-def cmd_hibernate(ensoapi):
-    """Hibernate the PC
-    The <b>hibernate</b> power management command hibernates the computer."""
-    try:
-        windll.powrprof.SetSuspendState(c_int(1), c_int(1), c_int(1))
-    except:
-        ensoapi.display_message('Error hibernating')
+#def cmd_hibernate(ensoapi):
+#    """Hibernate the PC
+#    The <b>hibernate</b> power management command hibernates the computer."""
+#    try:
+#        windll.powrprof.SetSuspendState(c_int(1), c_int(1), c_int(1))
+#    except:
+#        ensoapi.display_message('Error hibernating')
